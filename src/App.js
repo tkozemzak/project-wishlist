@@ -11,8 +11,8 @@ function App() {
   
 
   var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer + ${token}`);
-
+    myHeaders.append("Authorization", "Bearer " + token);
+    console.log("headers:", myHeaders);
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -31,7 +31,7 @@ function App() {
 
   //fetch repos from github api
   const fetchRepos = async () => {
-    const res = await fetch('https://api.github.com/users/bradtraversy/repos', requestOptions)
+    const res = await fetch('https://api.github.com/users/tkozemzak/repos', requestOptions)
     const data = await res.json()
     return data
 
