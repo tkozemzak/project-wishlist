@@ -1,24 +1,53 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import token from './token';
+import Repositories from './components/Repositories.js'
+import Repository from './components/Repository.js'
 
 function App() {
+  const [repos, setRepos] = useState([]);
+
+  
+
+  var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 370d90bc8bf319bcf7f701c0e8746aec16e16699");
+
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+  
+    
+    useEffect(() => {
+      const getRepos = async () => {
+        const reposFromApi = await fetchRepos()
+        setRepos(reposFromApi)
+        
+      }
+    getRepos()
+  }, [])
+
+  //fetch repos from github api
+  const fetchRepos = async () => {
+    const res = await fetch('https://api.github.com/users/bradtraversy/repos', requestOptions)
+    const data = await res.json()
+    return data
+
+  }
+
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+      repos.length > 0 ?
+      <Repositories repos={repos}/> :
+      'No repos'
+      }
     </div>
+
   );
 }
 
