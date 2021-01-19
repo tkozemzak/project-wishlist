@@ -56,9 +56,9 @@ const Repository = ({ repo }) => {
            <div> 
 <Card className={classes.root} variant="outlined">
       <CardHeader
-      <a>
+      
         avatar={<Avatar alt={repo.owner.login} src={repo.owner.avatar_url} />}
-        </a>
+        
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
