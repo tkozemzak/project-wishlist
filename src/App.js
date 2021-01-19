@@ -11,7 +11,7 @@ function App() {
   
 
   var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer 370d90bc8bf319bcf7f701c0e8746aec16e16699");
+    myHeaders.append("Authorization", `Bearer + ${token}`);
 
     var requestOptions = {
       method: 'GET',
