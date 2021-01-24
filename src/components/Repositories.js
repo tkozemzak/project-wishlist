@@ -4,7 +4,6 @@ const Repositories = ({ repos }) => {
 
     const sortedRepos = repos.sort((a, b) => b.id - a.id)
 
-    console.log("sortedRepos", sortedRepos);
     return (
         <ul>
             

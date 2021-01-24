@@ -50,7 +50,6 @@ const Repository = ({ repo }) => {
         setExpanded(!expanded);
       };
     
-    //console.log("props in repository js", repo.id);
     return (
       
            <div> 
@@ -65,7 +64,8 @@ const Repository = ({ repo }) => {
           </IconButton>
         }
         title={repo.name}
-        subheader={repo.created_at}
+        subheader={`Created: ${repo.created_at}`}
+        subheader={repo.pushed_at}
       />
       
 

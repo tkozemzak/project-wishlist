@@ -1,11 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import token from './token';
 import Repositories from './components/Repositories.js'
-import Repository from './components/Repository.js'
+import Header from './components/Header.js';
 
 function App() {
+  
+  const [currentUser, setCurrentUser] = useState([]);
+  const [currentUserExists, setCurrentUserExists] = useState(false);
   const [repos, setRepos] = useState([]);
 
   
@@ -20,31 +22,61 @@ function App() {
     };
   
     
-    useEffect(() => {
-      const getRepos = async () => {
-        const reposFromApi = await fetchRepos()
-        setRepos(reposFromApi)
+  //   useEffect(() => {
+  //     const getRepos = async () => {
+  //       const reposFromApi = await fetchRepos()
+  //       setRepos(reposFromApi)
         
-      }
-    getRepos()
-  }, [])
+  //     }
+  //   getRepos()
+  // }, [])
+
+  //fetch user from github api
+  const fetchUser = async () => {
+    const res = await fetch(`https://api.github.com/users/${currentUser}`, requestOptions)
+    const data = await res.json()
+    .then((data) => {
+      setCurrentUser(data)
+      setCurrentUserExists(true)
+    }).then(() => {
+      fetchRepos()
+      }) 
+  }
 
   //fetch repos from github api
   const fetchRepos = async () => {
-    const res = await fetch('https://api.github.com/users/tkozemzak/repos', requestOptions)
+    const res = await fetch(`https://api.github.com/users/${currentUser}/repos`, requestOptions)
     const data = await res.json()
+    setRepos(data)
     return data
 
   }
 
+
+  const handleUserEntry = (e) => {
+    setCurrentUser(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchUser()
+  }
+
+  const enteredValue = '';
   
 
   return (
     <div className="App">
+      <Header currentUser={currentUser}/>
       {
-      repos.length > 0 ?
+      currentUserExists ?
       <Repositories repos={repos}/> :
-      'No repos'
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <label>
+          <input type="text" name="user" placeholder="Enter Github Username" value={currentUser} onChange={handleUserEntry}/>
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
       }
     </div>
 
