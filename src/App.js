@@ -2,43 +2,33 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Repositories from "./components/Repositories.js";
 import Header from "./components/Header.js";
+import axios from "axios";
 
 function App() {
   const [currentUser, setCurrentUser] = useState([]);
   const [currentUserExists, setCurrentUserExists] = useState(false);
   const [repos, setRepos] = useState([]);
 
-  //   useEffect(() => {
-  //     const getRepos = async () => {
-  //       const reposFromApi = await fetchRepos()
-  //       setRepos(reposFromApi)
-
-  //     }
-  //   getRepos()
-  // }, [])
-
   //fetch user from github api (through keystore-proxy-server)
   const fetchUser = async () => {
-    const res = await fetch(
-      `http://localhost:3000/api/v1/project-wishlist/${currentUser}`
+    const res = await axios.get(
+      `https://localhost:8000/api/v1/project-wishlist/${currentUser}`
     );
-    const data = await res
-      .json()
-      .then((data) => {
-        setCurrentUser(data);
-        setCurrentUserExists(true);
-      })
-      .then(() => {
-        fetchRepos();
-      });
+
+    const data = await res.data;
+
+    setCurrentUser(data);
+    setCurrentUserExists(true);
+    fetchRepos();
   };
 
   //fetch repos from github api (through keystore-proxy-server)
   const fetchRepos = async () => {
-    const res = await fetch(
-      `http://localhost:3000/api/v1/project-wishlist/${currentUser}/repos`
+    const res = await axios.get(
+      `https://localhost:8000/api/v1/project-wishlist/${currentUser}/repos`
     );
-    const data = await res.json();
+
+    const data = await res.data;
     setRepos(data);
     return data;
   };
