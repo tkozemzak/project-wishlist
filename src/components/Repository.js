@@ -77,7 +77,6 @@ const Repository = ({ repo }) => {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <Typography>Open Goals</Typography>
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
