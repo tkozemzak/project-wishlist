@@ -12,7 +12,7 @@ function App() {
   //fetch user from github api (through keystore-proxy-server)
   const fetchUser = async () => {
     const res = await axios.get(
-      `https://localhost:8000/api/v1/project-wishlist/${currentUser}`
+      `https://54.241.133.31:8000/api/v1/project-wishlist/${currentUser}`
     );
 
     const data = await res.data;
@@ -25,7 +25,7 @@ function App() {
   //fetch repos from github api (through keystore-proxy-server)
   const fetchRepos = async () => {
     const res = await axios.get(
-      `https://localhost:8000/api/v1/project-wishlist/${currentUser}/repos`
+      `https://54.241.133.31:8000/api/v1/project-wishlist/${currentUser}/repos`
     );
 
     const data = await res.data;
